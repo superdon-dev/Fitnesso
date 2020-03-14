@@ -5,6 +5,7 @@ const ROUTES = {
     ANALYSIS: '/analysis',
     CHAT: '/chat',
     AUTH: '/auth',
+    LOGOUT: '/logout',
 
 };
 

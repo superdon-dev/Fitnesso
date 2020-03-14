@@ -1,22 +1,37 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import MenuItem from './MenuItem/MenuItem';
 import './Menu.css';
-import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
-import { NavLink } from 'react-router-dom';
+import SideNav from '@trendmicro/react-sidenav';
 
-const Menu = () => {
+class Menu extends Component {
+  render() {
     return (
         <SideNav>
         <SideNav.Toggle />
-        <SideNav.Nav defaultSelected="home">
+        <SideNav.Nav defaultSelected="Home">
             <MenuItem title="Home" icon="fa fa-home" route="/" />
-            <MenuItem title="Training" icon="fa fa-dumbbell" route="/training" />
-            <MenuItem title="Diet" icon="fa fa-apple-alt" route="/diet" />
-            <MenuItem title="Analysis" icon="fa fa-chart-area" route="/analysis" />
-            <MenuItem title="Chat" icon="fa fa-comments" route="/chat" />
+            {this.props.isAuthenticated ?
+            <React.Fragment>
+                <MenuItem title="Training" icon="fa fa-dumbbell" route="/training" />
+                <MenuItem title="Diet" icon="fa fa-apple-alt" route="/diet" />
+                <MenuItem title="Analysis" icon="fa fa-chart-area" route="/analysis" />
+                <MenuItem title="Chat" icon="fa fa-comments" route="/chat" />
+            </React.Fragment>
+            : null}
+            {!this.props.isAuthenticated
+                ? <MenuItem title="Login" icon="fa fa-sign-in" route="/auth" />
+                : <MenuItem title="Logout" icon="fa fa-sign-out" route="/logout" /> 
+            }
         </SideNav.Nav>
         </SideNav>
     )
+  }
+}
+const mapStateToProps = state => {
+    return{
+        isAuthenticated: state.auth.token !== null
+    }
 }
 
-export default Menu
+export default connect(mapStateToProps)(Menu)

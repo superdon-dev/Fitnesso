@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
+import firebase from '../../firebase';
 
 export const authStart = () => {
     return {
@@ -10,7 +11,7 @@ export const authSuccess = (token, userId) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         idToken: token,
-        userId: userId
+        userId: userId,
     };
 };
 export const authFail = (error) => {
@@ -34,7 +35,7 @@ export const checkAuthTimeout = (expirationTime) => {
         }, expirationTime * 1000);      
     };
 };
-export const auth = (email, password, isSignup) => {
+export const auth = (email, password, isSignup, userInfo) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
@@ -54,13 +55,25 @@ export const auth = (email, password, isSignup) => {
                 localStorage.setItem('userId', response.data.localId);
                 dispatch(authSuccess(response.data.idToken, response.data.localId));
                 dispatch(checkAuthTimeout(response.data.expiresIn));
+                dispatch(storeUser(response.data.localId, userInfo));
             })
             .catch(error => {
                 dispatch(authFail(error.response.data.error));
             });
     };
 };
-
+export const storeUser = (userId, userInfo) => {
+    return dispatch => {
+        const db = firebase.firestore();
+        db.collection("users").doc(userId).set({
+            email: userInfo.email,
+            fullname: userInfo.fullname,
+            gender: userInfo.gender,
+            weight: userInfo.weight,
+            height: userInfo.height            
+        });     
+    }
+};
 export const authCheckState = () => {
     return dispatch => {
         const token = localStorage.getItem('token');

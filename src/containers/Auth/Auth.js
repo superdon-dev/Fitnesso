@@ -9,6 +9,14 @@ import * as actions from '../../store/actions/exports';
 class Auth extends Component {
         state = {
             controls: {
+                fullname: {
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'Enter full name',
+                        required: true
+                    },
+                    value: '',
+                },  
                 email: {
                     elementConfig: {
                         type: 'email',
@@ -24,9 +32,35 @@ class Auth extends Component {
                         required: true
                     },
                     value: '',
-                },   
+                }, 
+                gender: {
+                    elementConfig: {
+                        type: 'select',
+                        options: [
+                            {gender: "Male"},
+                            {gender: "Female"}
+                        ]
+                    },
+                    value: 'Male',
+                }, 
+                weight: {
+                    elementConfig: {
+                        type: 'number',
+                        placeholder: 'Your weight',
+                        required: true
+                    },
+                    value: '',
+                }, 
+                height: {
+                    elementConfig: {
+                        type: 'number',
+                        placeholder: 'Your height',
+                        required: true
+                    },
+                    value: '',
+                }, 
             },
-            isSignup: false,
+            isSignup: true,
         }
     inputChangedHandler = (event, controlName) => {
         const updatedOrderForm = {
@@ -40,7 +74,14 @@ class Auth extends Component {
     }
     submitHandler = (event) => {
         event.preventDefault();
-        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup);
+        let userInfo = {
+            email: this.state.controls.email.value,
+            fullname: this.state.controls.fullname.value,
+            gender: this.state.controls.gender.value,
+            weight: this.state.controls.weight.value,
+            height: this.state.controls.height.value
+        }
+        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup, userInfo);
     }
     switchAuthModeHandler = () => {
         this.setState(prevState => {
@@ -55,16 +96,36 @@ class Auth extends Component {
                 config: this.state.controls[key]
             });
         }
-        let form= formElementsArray.map(formElement => (
-            <FormControl 
-                className="mb-3"
-                key={formElement.id}
-                type={formElement.config.elementConfig.type}
-                placeholder={formElement.config.elementConfig.placeholder}
-                required={formElement.config.elementConfig.required}
-                onChange={(event) => this.inputChangedHandler(event, formElement.id)}
-            />
-        ));
+        let form = formElementsArray.map(formElement => {
+                if(formElement.config.elementConfig.type!=="select"){
+                return (
+                <FormControl 
+                    className="mb-3"
+                    key={formElement.id}
+                    type={formElement.config.elementConfig.type}
+                    placeholder={formElement.config.elementConfig.placeholder}
+                    required={formElement.config.elementConfig.required}
+                    onChange={(event) => this.inputChangedHandler(event, formElement.id)}
+                /> )
+                }else{
+                    return (
+                        <FormControl 
+                            as="select"
+                            className="mb-3"
+                            key={formElement.id} 
+                            onChange={(event) => this.inputChangedHandler(event, formElement.id)}
+                            >
+                            {formElement.config.elementConfig.options.map((option) => (
+                                <option key={option.gender}>{option.gender}</option>
+                            ))}
+                        </FormControl>
+
+                    )
+                }
+            });
+        if(!this.state.isSignup){
+            form = form.slice(1, 3);
+        }
         if(this.props.loading){
             form = <Spinner />;
         }
@@ -103,7 +164,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup))
+        onAuth: (email, password, isSignup, userInfo) => dispatch(actions.auth(email, password, isSignup, userInfo)),
     }
 };
 

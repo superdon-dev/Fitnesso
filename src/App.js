@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import classes from './App.css';
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ROUTES } from './consts/routes';
 import { Route, Switch, Redirect, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import Menu from './components/Menu/Menu';
-import Header from './containers/Header/Header';
+import Container from './containers/Container/Container';
 import Home from './containers/Pages/Home/Home';
 import Training from './containers/Pages/Training/Training';
 import Diet from './containers/Pages/Diet/Diet';
@@ -40,9 +40,9 @@ class App extends Component{
       );
     }
     return (
-        <div className={classes.App}>
+        <div className="App">
           <Menu />
-          {this.props.isAuthenticated ? <Header /> : null}
+          {this.props.isAuthenticated ? <Container /> : null}
           {routes}
         </div>
     );

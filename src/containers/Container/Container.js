@@ -2,18 +2,19 @@ import React, { Component } from 'react'
 import * as actions from '../../store/actions/exports';
 import { connect } from 'react-redux';
 import Spinner from '../../components/Spinner/Spinner';
-export class Header extends Component {
+import './Container.css';
+export class Container extends Component {
     componentDidMount(){
         this.props.userFetch(this.props.userId);
     }
     render() {
-        let header = <div>Welcome {this.props.fullname}</div>;
+        let content = <div>Welcome {this.props.fullname}</div>;
         if(this.props.loading){
-            header = <Spinner />;
+            content = <Spinner />;
         }
         return (
-            <div>
-                {header}
+            <div className="Container">
+                {content}
             </div>
         )
     }
@@ -35,4 +36,4 @@ const mapDispatchToProps = (dispatch) => {
         userFetch: (userId) => dispatch(actions.userFetch(userId)),
     }
 };
-export default connect(mapStateToProps,mapDispatchToProps)(Header)
+export default connect(mapStateToProps,mapDispatchToProps)(Container)

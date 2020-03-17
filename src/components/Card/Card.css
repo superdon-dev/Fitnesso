@@ -1,0 +1,18 @@
+.Card{
+    background-color: #27282b;
+    box-sizing: border-box;
+    width: 75vw;
+    height: 20vh;
+    margin: 2vw;
+    padding: 5vw;
+    text-align: left;
+    border-radius: 5px;
+    border-left: solid 5px #ffa608;
+}
+.Card p{
+    margin: 0;
+    font-size: 1rem;
+}
+.Card i{
+    color: #ffa608;
+}

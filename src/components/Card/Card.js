@@ -34,7 +34,7 @@ function Card(props) {
         let days = calculateDays(timing);
         let prefix = days.split(' ')[0];
         let postfix = days.split(' ')[1];
-        let percent = 100 - Math.floor((prefix / 24)*100);
+        let percent = 100 - Math.floor((prefix / 168)*100);
         if(postfix==="days" || postfix==="day"){
             percent = 100 - Math.floor((prefix*24 / 168) * 100);
         }

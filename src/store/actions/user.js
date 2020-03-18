@@ -30,11 +30,10 @@ export const userFetch = (userId) => {
         userRef.get()
         .then(doc => {
             if (!doc.exists) {
-                let error="User does not exist!"
+                let error="Failed to load user info!"
                 dispatch(userFetchFail(error));
             } else {
                 dispatch(userFetchSuccess(doc.data()));
-                console.log(doc.data());
             }
         })
         .catch(error => {

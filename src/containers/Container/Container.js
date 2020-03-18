@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
     return {
-        userFetch: (userId) => dispatch(actions.userFetch(userId)),
+        userFetch: (userId) => dispatch(actions.userFetch(userId))
     }
 };
 export default connect(mapStateToProps,mapDispatchToProps)(Container)

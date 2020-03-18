@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ROUTES } from './consts/routes';
 import { Route, Switch, Redirect, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import Menu from './components/Menu/Menu';
 import Container from './containers/Container/Container';
+import Menu from './components/Menu/Menu';
 import Home from './containers/Pages/Home/Home';
 import Training from './containers/Pages/Training/Training';
 import Diet from './containers/Pages/Diet/Diet';
@@ -18,6 +18,9 @@ import * as actions from './store/actions/exports';
 class App extends Component{
   componentDidMount(){
     this.props.onTryAutoSignin();
+    if(this.props.isAuthenticated){
+      this.props.userFetch(this.props.userId);
+    }
   }
   render () {
     let routes = (
@@ -51,11 +54,13 @@ class App extends Component{
 const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.token !== null,
+    userId: state.auth.userId,
   }
 }
 const mapDispatchToProps = dispatch => {
   return{
-    onTryAutoSignin: () => dispatch(actions.authCheckState())
+    onTryAutoSignin: () => dispatch(actions.authCheckState()),
+    userFetch: (userId) => dispatch(actions.userFetch(userId)),
   }
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

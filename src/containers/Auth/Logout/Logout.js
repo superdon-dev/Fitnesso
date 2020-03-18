@@ -6,6 +6,7 @@ import * as actions from '../../../store/actions/exports';
 export class Logout extends Component {
     componentDidMount(){
         this.props.onLogout();
+        this.props.trainingsRemove();
     }
     render() {
         return <Redirect to="/" />
@@ -13,7 +14,8 @@ export class Logout extends Component {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        onLogout: () => dispatch(actions.logout())
+        onLogout: () => dispatch(actions.logout()),
+        trainingsRemove: () => dispatch(actions.trainingsRemove()),
     }
 }
 export default connect(null, mapDispatchToProps)(Logout)

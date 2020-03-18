@@ -8,3 +8,8 @@ export {
 export {
     userFetch,
 } from './user';
+
+export { 
+    trainingsFetch,
+    trainingsRemove
+} from './trainings';

@@ -1,3 +1,19 @@
 .Training{
     margin-left: 20vw;
 }
+@media only screen and (max-width: 600px) {
+    .Training{
+        margin-left: 20vw;
+        padding-top: 1.5vh;
+    }
+}
+@media only screen and (min-width: 768px) {
+    .Training{
+        margin-left: 10vw;
+    }
+}
+@media only screen and (min-width: 992px) {
+    .Training{
+        margin-left: 5vw;
+    }
+}

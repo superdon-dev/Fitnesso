@@ -8,7 +8,7 @@
     * This fixes an issue where the CircularProgressbar svg has
     * 0 width inside a "display: flex" container, and thus not visible.
     */
-   width: 20vw;
+   width: 13vw;
    /*
     * This fixes a centering issue with CircularProgressbarWithChildren:
     * https://github.com/kevinsqi/react-circular-progressbar/issues/94
@@ -65,3 +65,18 @@
    stroke: transparent;
  }
  
+ @media only screen and (max-width: 600px) {
+  .CircularProgressbar{
+      width: 20vw;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .CircularProgressbar{
+      width: 10vw;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .CircularProgressbar{
+     width: 5vw;
+  }
+}

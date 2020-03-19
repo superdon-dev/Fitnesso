@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ROUTES } from './consts/routes';
 import { Route, Switch, Redirect, withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
-import Container from './containers/Container/Container';
+import Header from './containers/Header/Header';
 import Menu from './components/Menu/Menu';
 import Home from './containers/Pages/Home/Home';
 import Training from './containers/Pages/Training/Training';
@@ -45,7 +45,7 @@ class App extends Component{
     return (
         <div className="App">
           <Menu />
-          {this.props.isAuthenticated ? <Container /> : null}
+          {this.props.isAuthenticated ? <Header /> : null}
           {routes}
         </div>
     );

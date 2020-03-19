@@ -7,6 +7,7 @@ export {
 
 export {
     userFetch,
+    removeUserUrl,
 } from './user';
 
 export { 

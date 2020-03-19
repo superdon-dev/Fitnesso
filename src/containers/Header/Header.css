@@ -1,0 +1,61 @@
+.Header{
+    background-color: #ffa608;
+    padding-left: 6vw;
+    padding-top: 1vh;
+    width: 100vw;
+    height: 8vh;
+}
+.Logo img{
+    float: left;
+    width: 20vw;
+}
+.Avatar img {
+    float: left;
+    margin-left: 45vw;
+    width: 15vw;
+    border-radius: 50%;
+    background-color: #fff;
+    border: solid 1vh #ffa608;
+}
+
+@media only screen and (max-width: 600px) {
+    .Header{
+        padding-top: 1vh;
+        padding-left: 10vw;
+        height: 9vh;
+    }
+    .Logo img{
+        width: 30vw;
+    }
+    .Avatar img {
+        width: 20vw;
+        margin-left: 25vw;
+    }
+}
+@media only screen and (min-width: 768px) {
+    .Header{
+        padding-left: 5vw;
+        height: 8vh;
+    }
+    .Logo img{
+        width: 20vw;
+    }
+    .Avatar img {
+        width: 15vw;
+        margin-left: 45vw;
+    }
+}
+@media only screen and (min-width: 992px) {
+    .Header{
+        padding-left: 3.5vw;
+        height: 10vh;
+    }
+    .Logo img{
+        width: 11vw;
+    }
+    .Avatar img {
+        width: 7vw;
+        margin-left: 70vw;
+    }
+    
+}

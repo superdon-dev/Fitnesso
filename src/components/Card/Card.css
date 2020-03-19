@@ -1,10 +1,10 @@
 .Card{
     background-color: #27282b;
     box-sizing: border-box;
-    width: 75vw;
+    width: 50vw;
     height: 20vh;
     margin: 2vw;
-    padding: 5vw;
+    padding: 3vw;
     text-align: left;
     border-radius: 5px;
     border-left: solid 5px #ffa608;
@@ -15,4 +15,28 @@
 }
 .Card i{
     color: #ffa608;
+}
+
+@media only screen and (max-width: 600px) {
+    .Card{
+        width: 75vw;
+        height: 33vw;
+        padding: 5vw;
+        margin-top: 5vw;
+    }
+    
+}
+@media only screen and (min-width: 768px) {
+    .Card{
+        width: 38vw;
+        height: 17vw;
+        padding: 2.5vw;
+    }
+}
+@media only screen and (min-width: 992px) {
+    .Card{
+        width: 20vw;
+        height: 10vw;
+        padding: 2.2vw;
+    }
 }

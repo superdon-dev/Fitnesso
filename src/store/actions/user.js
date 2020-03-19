@@ -6,7 +6,7 @@ export const userFetchStart = () => {
         type: actionTypes.FETCH_USER_START
     };
 };
-export const userFetchSuccess = (data) => {
+export const userFetchSuccess = (data, imageUrl) => {
     return {
         type: actionTypes.FETCH_USER_SUCCESS,
         email: data.email,
@@ -14,6 +14,7 @@ export const userFetchSuccess = (data) => {
         gender: data.gender,
         height: data.height,
         weight: data.weight,
+        imageUrl: imageUrl,
     };
 };
 export const userFetchFail = (error) => {
@@ -22,10 +23,16 @@ export const userFetchFail = (error) => {
         error: error
     };
 };
+export const removeUserUrl = () => {
+    return{
+        type: actionTypes.REMOVE_USER_URL,
+    }
+}
 export const userFetch = (userId) => {
     return dispatch => {
         dispatch(userFetchStart());
         const db = firebase.firestore();
+        const storage = firebase.storage().ref();
         let userRef = db.collection('users').doc(userId);
         userRef.get()
         .then(doc => {
@@ -33,11 +40,19 @@ export const userFetch = (userId) => {
                 let error="Failed to load user info!"
                 dispatch(userFetchFail(error));
             } else {
-                dispatch(userFetchSuccess(doc.data()));
+                let link='avatars/'+userId+'.jpg';
+                storage.child(link).getDownloadURL()
+                .then((url) => {
+                    dispatch(userFetchSuccess(doc.data(),url));
+                }).catch((error) => {
+                    dispatch(userFetchFail(error));
+                })
             }
         })
         .catch(error => {
             dispatch(userFetchFail(error));
         });
+        
+        
     }
 };

@@ -8,6 +8,7 @@ const initialState={
     height: '',
     weight: '',
     error: null,
+    imageUrl: '',
     loading: false,
 }
 const fetchUserStart = (state) => {
@@ -20,8 +21,9 @@ const fetchUserSuccess = (state, action) => {
         gender: action.gender,
         height: action.height,
         weight: action.weight,
-        error: null,
+        imageUrl: action.imageUrl,
         loading: false,
+        error: null,
     });
 }
 const fetchUserFail = (state, action) => {
@@ -30,11 +32,15 @@ const fetchUserFail = (state, action) => {
         loading: false
     });
 }
+const userUrlRemove = (state) => {
+    return updateObject(state, {imageUrl: ''});
+}
 const reducer = (state=initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_USER_START: return fetchUserStart(state);
         case actionTypes.FETCH_USER_SUCCESS: return fetchUserSuccess(state, action);
         case actionTypes.FETCH_USER_FAIL: return fetchUserFail(state, action);
+        case actionTypes.REMOVE_USER_URL: return userUrlRemove(state, action);
         default:
             return state;  
     }

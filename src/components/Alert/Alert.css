@@ -1,0 +1,31 @@
+.Alert{
+    background-color: #ffa608;
+    width: 100vw;
+    height: 10vw;
+    text-align: center;
+    border-radius: 5px;
+    margin: 2vw;
+}
+
+@media only screen and (max-width: 600px) {
+    .Alert{
+        width: 75vw;
+        height: 15vw;
+        padding: 4vw;
+        margin-top: 5vw;
+    }
+}
+@media only screen and (min-width: 768px) {
+    .Alert{
+        width: 40vw;
+        height: 8vw;
+        padding: 2vw;
+    }
+}
+@media only screen and (min-width: 992px) {
+    .Alert{
+        width: 30vw;
+        height: 4vw;
+        padding: 1.2vw;
+    }
+}

@@ -11,7 +11,6 @@
 }
 .Avatar img {
     float: left;
-    margin-left: 45vw;
     width: 15vw;
     border-radius: 50%;
     background-color: #fff;
@@ -20,9 +19,9 @@
 
 @media only screen and (max-width: 600px) {
     .Header{
-        padding-top: 1vh;
-        padding-left: 10vw;
-        height: 9vh;
+        padding-top: 1.5vh;
+        padding-left: 20vw;
+        height: 16vw;
     }
     .Logo img{
         width: 30vw;
@@ -34,11 +33,12 @@
 }
 @media only screen and (min-width: 768px) {
     .Header{
-        padding-left: 5vw;
-        height: 8vh;
+        padding-top: 1.5vh;
+        padding-left: 12vw;
+        height: 10vw;
     }
     .Logo img{
-        width: 20vw;
+        width: 22vw;
     }
     .Avatar img {
         width: 15vw;
@@ -47,7 +47,7 @@
 }
 @media only screen and (min-width: 992px) {
     .Header{
-        padding-left: 3.5vw;
+        padding-left: 6vw;
         height: 10vh;
     }
     .Logo img{

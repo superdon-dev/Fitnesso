@@ -10,6 +10,7 @@ import Home from './containers/Pages/Home/Home';
 import Training from './containers/Pages/Training/Training';
 import Diet from './containers/Pages/Diet/Diet';
 import Analysis from './containers/Pages/Analysis/Analysis';
+import AddTraining from './containers/Pages/Training/AddTraining/AddTraining';
 import Chat from './containers/Pages/Chat/Chat';
 import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
@@ -18,8 +19,10 @@ import * as actions from './store/actions/exports';
 class App extends Component{
   componentDidMount(){
     this.props.onTryAutoSignin();
-    if(this.props.isAuthenticated){
-      this.props.userFetch(this.props.userId);
+  }
+  UNSAFE_componentWillReceiveProps(newProps){
+    if(this.props.userId !== newProps.userId && newProps.userId !== null){
+      this.props.checkUserType(newProps.userId);
     }
   }
   render () {
@@ -30,7 +33,7 @@ class App extends Component{
         <Redirect to="/" />
       </Switch>
     );
-    if(this.props.isAuthenticated){
+    if(this.props.isAuthenticated && this.props.userType==="Practitioner"){
       routes = (
       <Switch>
           <Route exact path={ROUTES.HOME} component={Home}></Route>
@@ -42,10 +45,20 @@ class App extends Component{
       </Switch>
       );
     }
+    if(this.props.isAuthenticated && this.props.userType==="Trainer"){
+      routes = (
+        <Switch>
+          <Route exact path={ROUTES.HOME} component={Home}></Route>
+          <Route exact path={ROUTES.ADDTRAINING} component={AddTraining}></Route>
+          <Route exact path={ROUTES.CHAT} component={Chat}></Route>
+          <Route exact path={ROUTES.LOGOUT} component={Logout}></Route>
+        </Switch>
+      )
+    }
     return (
         <div className="App">
           <Menu />
-          {this.props.isAuthenticated ? <Header /> : null}
+          {(this.props.isAuthenticated && this.props.userType!=='') ? <Header /> : null}
           {routes}
         </div>
     );
@@ -55,12 +68,13 @@ const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.token !== null,
     userId: state.auth.userId,
+    userType: state.user.userType,
   }
 }
 const mapDispatchToProps = dispatch => {
   return{
+    checkUserType: (userId) => dispatch(actions.checkUserType(userId)),
     onTryAutoSignin: () => dispatch(actions.authCheckState()),
-    userFetch: (userId) => dispatch(actions.userFetch(userId)),
   }
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

@@ -42,7 +42,7 @@ class Auth extends Component {
                         ]
                     },
                     value: 'Male',
-                }, 
+                },
                 weight: {
                     elementConfig: {
                         type: 'number',
@@ -59,6 +59,24 @@ class Auth extends Component {
                     },
                     value: '',
                 }, 
+                userType: {
+                    elementConfig: {
+                        type: 'checkbox',
+                        options: [
+                            {
+                                option: "Practitioner", 
+                                type:"radio", 
+                                name: "userType"
+                            },
+                            {
+                                option: "Trainer", 
+                                type: "radio", 
+                                name: "userType"
+                            }
+                        ],
+                        value: '',
+                    },
+                },  
             },
             isSignup: true,
         }
@@ -79,7 +97,8 @@ class Auth extends Component {
             fullname: this.state.controls.fullname.value,
             gender: this.state.controls.gender.value,
             weight: this.state.controls.weight.value,
-            height: this.state.controls.height.value
+            height: this.state.controls.height.value,
+            userType: this.state.controls.userType.value,
         }
         this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup, userInfo);
     }
@@ -97,30 +116,46 @@ class Auth extends Component {
             });
         }
         let form = formElementsArray.map(formElement => {
-                if(formElement.config.elementConfig.type!=="select"){
-                return (
-                <FormControl 
-                    className="mb-3"
-                    key={formElement.id}
-                    type={formElement.config.elementConfig.type}
-                    placeholder={formElement.config.elementConfig.placeholder}
-                    required={formElement.config.elementConfig.required}
-                    onChange={(event) => this.inputChangedHandler(event, formElement.id)}
-                /> )
-                }else{
-                    return (
-                        <FormControl 
-                            as="select"
-                            className="mb-3"
+                switch (formElement.config.elementConfig.type){
+                    case 'select':
+                        return (
+                            <FormControl 
+                                as="select"
+                                className="mb-3"
+                                key={formElement.id} 
+                                onChange={(event) => this.inputChangedHandler(event, formElement.id)}>
+                                {formElement.config.elementConfig.options.map((option) => (
+                                    <option key={option.gender}>{option.gender}</option>
+                                ))}
+                            </FormControl>
+                        )
+                    case 'checkbox':
+                        return (
+                            <Form.Group 
                             key={formElement.id} 
-                            onChange={(event) => this.inputChangedHandler(event, formElement.id)}
-                            >
-                            {formElement.config.elementConfig.options.map((option) => (
-                                <option key={option.gender}>{option.gender}</option>
-                            ))}
-                        </FormControl>
-
-                    )
+                            onChange={(event) => this.inputChangedHandler(event, formElement.id)}>
+                            {formElement.config.elementConfig.options.map((option) =>  
+                                <Form.Check
+                                    inline
+                                    key={option.option}
+                                    label={option.option}
+                                    value={option.option}
+                                    type={option.type} 
+                                />
+                            )
+                            }
+                            </Form.Group>
+                        )    
+                    default:
+                        return ( 
+                            <FormControl 
+                                className="mb-3"
+                                key={formElement.id}
+                                type={formElement.config.elementConfig.type}
+                                placeholder={formElement.config.elementConfig.placeholder}
+                                required={formElement.config.elementConfig.required}
+                                onChange={(event) => this.inputChangedHandler(event, formElement.id)}
+                            />)
                 }
             });
         if(!this.state.isSignup){

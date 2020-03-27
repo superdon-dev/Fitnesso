@@ -6,7 +6,7 @@ const ROUTES = {
     CHAT: '/chat',
     AUTH: '/auth',
     LOGOUT: '/logout',
-
+    ADDTRAINING: '/add-training'
 };
 
 export { ROUTES };

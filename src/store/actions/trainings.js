@@ -18,25 +18,40 @@ export const trainingsFetchFail = (error) => {
         error: error
     };
 };
+export const trainingsFetchEmpty = (empty) => {
+    return {
+        type: actionTypes.FETCH_TRAININGS_EMPTY,
+        empty: empty
+    };
+};
 export const trainingsRemove = () => {
     return {
         type: actionTypes.FETCH_TRAININGS_LOGOUT,
     };
 };
-export const trainingsFetch = (userId) => {
+export const trainingsFetch = (userId, userType) => {
     return dispatch => {
         dispatch(trainingsFetchStart());
         const db = firebase.firestore();
-        let userRef = db.collection('users').doc(userId).collection('trainings');
+        let userRef = db.collection('Trainings');
         userRef.get()
         .then(collection => {
             let coll=[];
-            collection.docs.forEach(doc => {
-                coll.push(doc.data());
-            })
+            if(userType==="Practitioner"){
+                collection.docs.forEach(doc => {
+                    if(doc.data().practitionerId===userId){
+                        coll.push(doc.data());
+                    }
+                })
+            }else if(userType==="Trainer"){
+                collection.docs.forEach(doc => {
+                    if(doc.data().trainerId===userId){
+                        coll.push(doc.data());
+                    }
+                })
+            }
             if(coll.length===0) {
-                let error="Failed to load trainings!"
-                dispatch(trainingsFetchFail(error));
+                dispatch(trainingsFetchEmpty("No trainings found!"));
             } else {
                 dispatch(trainingsFetchSuccess(coll));
             }
@@ -46,3 +61,43 @@ export const trainingsFetch = (userId) => {
         });
     }
 };
+
+export const trainingPostStart = () => {
+    return {
+        type: actionTypes.POST_TRAINING_START,
+    };
+};
+export const trainingPostSuccess = (message) => {
+    return {
+        type: actionTypes.POST_TRAINING_SUCCESS,
+        message: message,
+    };
+};
+export const trainingPostFail = (error) => {
+    return {
+        type: actionTypes.POST_TRAINING_FAIL,
+        error: error,
+    };
+};
+export const trainingPost = (training) => {
+    return dispatch => {
+        dispatch(trainingPostStart());
+        const db = firebase.firestore();
+        db.collection("Trainings").doc().set({
+            practitionerId: training.practitionerId,
+            practitionerFullname: training.practitionerFullname,
+            trainerId: training.trainerId,
+            trainerFullname: training.trainerFullname,
+            place: training.place,
+            time: training.dateTime,
+            type: training.trainingType,
+            intensity: training.intensity,
+        }).then(() => {
+            let message="Successfully added training";
+            dispatch(trainingPostSuccess(message));       
+        }).catch((error) => {
+            dispatch(trainingPostFail(error));
+        })
+        // 
+    }
+}

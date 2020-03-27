@@ -67,10 +67,11 @@ export const auth = (email, password, isSignup, userInfo) => {
 export const storeUser = (userId, userInfo) => {
     return dispatch => {
         const db = firebase.firestore();
-        db.collection("users").doc(userId).set({
+        db.collection(userInfo.userType).doc(userId).set({
             email: userInfo.email,
             fullname: userInfo.fullname,
             gender: userInfo.gender,
+            userType: userInfo.userType,
             weight: userInfo.weight,
             height: userInfo.height            
         });     

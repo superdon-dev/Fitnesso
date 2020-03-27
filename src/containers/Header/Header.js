@@ -7,7 +7,8 @@ import logo from '../../assets/logo.png';
 import avatar from '../../assets/avatar.png';
 export class Header extends Component {
     componentDidMount(){
-        this.props.userFetch(this.props.userId);
+        this.props.userFetch(this.props.userId, this.props.userType);
+        this.props.usersFetch();
     }
     render() {
         let content = (
@@ -23,11 +24,7 @@ export class Header extends Component {
         if(this.props.loading){
             content = <Spinner />;
         }
-        return (
-            <div className="Header">
-                {content}
-            </div>
-        )
+        return content;
     }
 }
 
@@ -39,13 +36,15 @@ const mapStateToProps = (state) => {
         height: state.user.height,
         weight: state.user.weight,
         imageUrl: state.user.imageUrl,
+        userType: state.user.userType,
         loading: state.user.loading,
         error: state.user.error,
     }
 };
 const mapDispatchToProps = (dispatch) => {
     return {
-        userFetch: (userId) => dispatch(actions.userFetch(userId))
+        userFetch: (userId, userType) => dispatch(actions.userFetch(userId, userType)),
+        usersFetch: () => dispatch(actions.usersFetch()),
     }
 };
 export default connect(mapStateToProps,mapDispatchToProps)(Header)

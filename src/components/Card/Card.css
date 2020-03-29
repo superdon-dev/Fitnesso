@@ -16,15 +16,7 @@
 .Card i{
     color: #ffa608;
 }
-.escape{
-    position: absolute;
-    border-radius: 50%;
-    border-width: 2;
-    background: #ffa608;
-    color: white;
-    top: 1vw;
-    right: 1vw;
-}
+
 
 @media only screen and (max-width: 600px) {
     .Card{

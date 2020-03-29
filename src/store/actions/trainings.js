@@ -46,9 +46,11 @@ export const trainingsFetch = (userId, userType) => {
             }else if(userType==="Trainer"){
                 collection.docs.forEach(doc => {
                     if(doc.data().trainerId===userId){
-                        coll.push(doc.data());
+                        let info = doc.data()
+                        info.tId = doc.id;
+                        coll.push(info);
                     }
-                })
+                })   
             }
             if(coll.length===0) {
                 dispatch(trainingsFetchEmpty("No trainings found!"));
@@ -98,6 +100,21 @@ export const trainingPost = (training) => {
         }).catch((error) => {
             dispatch(trainingPostFail(error));
         })
-        // 
+    }
+}
+export const trainingDeleteSuccess = (message) => {
+    return {
+        type: actionTypes.POST_TRAINING_SUCCESS,
+        message: message,
+    };
+};
+export const trainingDelete = (tId) => {
+    return dispatch => {
+        const db = firebase.firestore();
+        let deleteDoc = db.collection('Trainings').doc(tId);
+        deleteDoc.delete()
+        .then(function(){
+            dispatch(trainingDeleteSuccess("Remove succeeded"));
+        })
     }
 }

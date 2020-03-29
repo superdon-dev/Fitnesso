@@ -6,7 +6,8 @@ const ROUTES = {
     CHAT: '/chat',
     AUTH: '/auth',
     LOGOUT: '/logout',
-    ADDTRAINING: '/add-training'
+    ADDTRAINING: '/add-training',
+    PREVIEWTRAINING: '/preview-training/:id'
 };
 
 export { ROUTES };

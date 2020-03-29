@@ -1,0 +1,61 @@
+.TrainingInfo{
+    background-color: #27282b;
+    box-sizing: border-box;
+    width: 40vw;
+    height: 50vh;
+    margin: auto;
+    padding: 4vw;
+    border-radius: 5px;
+    border-left: solid 5px #ffa608;
+}
+h4,h6{
+    text-align: center;
+}
+.TrainingInfo i{
+    color: #ffa608
+}
+.Content{
+    text-align: left;
+}
+.Buttons{
+    color: #fff;
+}
+.Buttons i{
+    color: #fff;
+}
+@media only screen and (max-width: 600px) {
+    .TrainingInfo{
+        width: 78vw;
+        height: 55vh;
+        padding: 5vw;
+        margin: 5vw 0 0 20vw;
+    }
+    .Content{
+        text-align: center;
+    }
+    .Chart{
+        display: none;
+    }
+}
+@media only screen and (min-width: 768px) {
+    .TrainingInfo{
+        width: 50vw;
+        height: 30vh;
+        padding: 2vw;
+        margin: 5vw 0 0 28vw;
+    }
+    .Content{
+        text-align: left;
+    }
+}
+@media only screen and (min-width: 992px) {
+    .TrainingInfo{
+        width: 40vw;
+        height: 50vh;
+        padding: 2vw;
+        margin: 5vw 0 0 30vw;
+    }
+    .Content{
+        text-align: left;
+    }
+}

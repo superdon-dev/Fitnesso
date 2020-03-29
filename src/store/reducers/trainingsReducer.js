@@ -48,6 +48,13 @@ const trainingPostFail = (state, action) => {
         loading: false
     });
 }
+const trainingDeleteSuccess = (state, action) => {
+    return updateObject(state, {
+        message: action.message,
+        error: null,
+        loading: false,
+    });
+}
 const reducer = (state=initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_TRAININGS_START: return trainingsFetchStart(state);
@@ -58,6 +65,7 @@ const reducer = (state=initialState, action) => {
         case actionTypes.POST_TRAINING_START: return trainingPostStart(state);
         case actionTypes.POST_TRAINING_SUCCESS: return trainingPostSuccess(state, action);
         case actionTypes.POST_TRAINING_FAIL: return trainingPostFail(state, action);
+        case actionTypes.DELETE_TRAINING: return trainingDeleteSuccess(state, action);
         default:
             return state;  
     }

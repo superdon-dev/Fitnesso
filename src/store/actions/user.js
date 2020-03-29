@@ -70,14 +70,9 @@ export const userFetch = (userId, userType) => {
                 let link='avatars/'+userId+'.jpg';
                 storage.child(link).getDownloadURL()
                 .then((url) => {
-                    console.log(url);
                     dispatch(userFetchSuccess(doc.data(),url));
                 }).catch((error) => {
-                    switch (error.code) {
-                        case 'storage/object-not-found':
-                            dispatch(userFetchSuccess(doc.data(),''));
-                            break;
-                    }
+                    dispatch(userFetchSuccess(doc.data(),''));
                 });
             }
         })

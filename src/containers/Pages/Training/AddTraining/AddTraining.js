@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Form, FormGroup, FormControl, InputGroup, Button} from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';                                         
 import Spinner from '../../../../components/Spinner/Spinner';
 import Card from '../../../../components/Card/Card';
 import Alert from '../../../../components/Alert/Alert';
@@ -43,11 +44,9 @@ class AddTraining extends Component {
                 dateTime: {
                     elementConfig: {
                         type: 'datetime-local',
-                        placeholder: 'Enter Date/Time',
-                        default: new Date(),
                         required: true
                     },
-                    value: '',
+                    value: new Date().toISOString().slice(0,16),
                     icon: 'fa fa-calendar-alt',
                 }, 
             },
@@ -77,6 +76,7 @@ class AddTraining extends Component {
                 },
                 value: options[0],
                 id: 0,
+                icon: 'fa fa-user',
             },
         }
         this.setState({controls: updatedUserOptions});
@@ -138,8 +138,12 @@ class AddTraining extends Component {
         let content=<Spinner />;
         if(this.props.trainings && !this.state.loading){
             content = (                
-                this.props.trainings.map(training => {
-                    return <Card className="Card" practitioner={training.practitionerFullname} key={training.training} training={training.type} timing={training.time} place={training.place}/>
+                this.props.trainings.map((training,index) => {
+                    return (
+                    <NavLink to={`/preview-training/${index}`} style={{ textDecoration: 'none', color: '#fff' }}>
+                          <Card className="Card" practitioner={training.practitionerFullname} key={training.training} training={training.type} timing={training.time} place={training.place}/>
+                    </NavLink>
+                    )
                 })
             )
         }
@@ -151,8 +155,8 @@ class AddTraining extends Component {
                     case 'select':
                         return (
                             <InputGroup className="mb-3">
-                                <InputGroup.Prepend>
-                                        <InputGroup.Text><i className={formElement.config.icon}/></InputGroup.Text>
+                                 <InputGroup.Prepend>
+                                    <InputGroup.Text><i className={formElement.config.icon}/></InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl 
                                     as="select"
@@ -175,6 +179,7 @@ class AddTraining extends Component {
                                     type={formElement.config.elementConfig.type}
                                     placeholder={formElement.config.elementConfig.placeholder}
                                     required={formElement.config.elementConfig.required}
+                                    value={formElement.config.value}
                                     onChange={(event) => this.inputChangedHandler(event, formElement.id)}
                                 />
                             </InputGroup>
@@ -186,17 +191,17 @@ class AddTraining extends Component {
                 <Col xs={12}> 
                     <Row>
                         <Col xs={3}><img src={icon1} alt="Chest" className={this.state.trainingType === 'Chest' ? 'selected' : null} onClick={(e) => this.imageClick(e)}/></Col>
-                        <Col xs={3}><img src={icon2} alt="Back" className={this.state.trainingType === 'Back' ? 'selected' : null} onClick={(e) => this.imageClick(e)} onClick={(e) => this.imageClick(e)}/></Col>
-                        <Col xs={3}><img src={icon3} alt="Leg" className={this.state.trainingType === 'Leg' ? 'selected' : null} onClick={(e) => this.imageClick(e)} onClick={(e) => this.imageClick(e)}/></Col>
-                        <Col xs={3}><img src={icon4} alt="Arm" className={this.state.trainingType === 'Arm' ? 'selected' : null} onClick={(e) => this.imageClick(e)} onClick={(e) => this.imageClick(e)}/></Col>
+                        <Col xs={3}><img src={icon2} alt="Back" className={this.state.trainingType === 'Back' ? 'selected' : null} onClick={(e) => this.imageClick(e)}/></Col>
+                        <Col xs={3}><img src={icon3} alt="Leg" className={this.state.trainingType === 'Leg' ? 'selected' : null} onClick={(e) => this.imageClick(e)}/></Col>
+                        <Col xs={3}><img src={icon4} alt="Arm" className={this.state.trainingType === 'Arm' ? 'selected' : null} onClick={(e) => this.imageClick(e)}/></Col>
                     </Row>
                 </Col>
                 <Col xs={12}> 
                     <Row>
                         <Col xs={3}><img src={icon5} alt="Abs" className={this.state.trainingType === 'Abs' ? 'selected' : null} onClick={(e) => this.imageClick(e)}/></Col>
-                        <Col xs={3}><img src={icon6} alt="Shoulder" className={this.state.trainingType === 'Shoulder' ? 'selected' : null} onClick={(e) => this.imageClick(e)} onClick={(e) => this.imageClick(e)}/></Col>
-                        <Col xs={3}><img src={icon7} alt="Cardio" className={this.state.trainingType === 'Cardio' ? 'selected' : null} onClick={(e) => this.imageClick(e)} onClick={(e) => this.imageClick(e)}/></Col>
-                        <Col xs={3}><img src={icon8} alt="Hiit" className={this.state.trainingType === 'Hiit' ? 'selected' : null} onClick={(e) => this.imageClick(e)} onClick={(e) => this.imageClick(e)}/></Col>
+                        <Col xs={3}><img src={icon6} alt="Shoulder" className={this.state.trainingType === 'Shoulder' ? 'selected' : null} onClick={(e) => this.imageClick(e)}/></Col>
+                        <Col xs={3}><img src={icon7} alt="Cardio" className={this.state.trainingType === 'Cardio' ? 'selected' : null} onClick={(e) => this.imageClick(e)}/></Col>
+                        <Col xs={3}><img src={icon8} alt="Hiit" className={this.state.trainingType === 'Hiit' ? 'selected' : null} onClick={(e) => this.imageClick(e)}/></Col>
                     </Row>    
                 </Col>
             </Row>

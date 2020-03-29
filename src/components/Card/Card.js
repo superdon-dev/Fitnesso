@@ -1,7 +1,7 @@
 import React from 'react'
 import './Card.css';
 import Chart from './Chart/Chart';
-import {Row, Col, Button} from 'react-bootstrap';
+import {Row, Col} from 'react-bootstrap';
 function Card(props) {
     let calculateDays = function(timing){
         var startDate =  new Date().toISOString();
@@ -42,21 +42,18 @@ function Card(props) {
     }
     return (
         <div className="Card">
-            <Row>
-            <Col xs="7">
-                <h5>{props.training}</h5>
-                {props.trainer ? (<p><i className="fa fa-user mr-2"/>{props.trainer.split(" ")[1]+" "+props.trainer.split(" ")[0].substring(0,1)+'.'}</p>) : null}
-                {props.practitioner ? (<p><i className="fa fa-user mr-2"/>{props.practitioner.split(" ")[1]+" "+props.practitioner.split(" ")[0].substring(0,1)+'.'}</p>) : null}
-                <p><i className="fa fa-calendar mr-2"/>{getDate(props.timing)}</p>
-                <p><i className="fa fa-map-marker mr-2"/>{props.place}</p>
-            </Col>
-            <Col xs="4" className="mt-3">
-                <Chart percentage={calculatePercentage(props.timing)} timing={calculateDays(props.timing)}/>
-            </Col>
-            <Col xs="1" className="mt-3">
-                <Button>Remove</Button>
-            </Col>
-            </Row>
+                <Row>
+                <Col xs="7">
+                    <h5>{props.training}</h5>
+                    {props.trainer ? (<p><i className="fa fa-user mr-2"/>{props.trainer.split(" ")[1]+" "+props.trainer.split(" ")[0].substring(0,1)+'.'}</p>) : null}
+                    {props.practitioner ? (<p><i className="fa fa-user mr-2"/>{props.practitioner.split(" ")[1]+" "+props.practitioner.split(" ")[0].substring(0,1)+'.'}</p>) : null}
+                    <p><i className="fa fa-calendar mr-2"/>{getDate(props.timing)}</p>
+                    <p><i className="fa fa-map-marker mr-2"/>{props.place}</p>
+                </Col>
+                <Col xs="4" className="mt-3">
+                    <Chart percentage={calculatePercentage(props.timing)} timing={calculateDays(props.timing)}/>
+                </Col>
+                </Row>
         </div>
     )
 }

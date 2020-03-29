@@ -16,4 +16,5 @@ export {
     trainingsFetch,
     trainingsRemove,
     trainingPost,
+    trainingDelete,
 } from './trainings';

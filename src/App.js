@@ -11,6 +11,7 @@ import Training from './containers/Pages/Training/Training';
 import Diet from './containers/Pages/Diet/Diet';
 import Analysis from './containers/Pages/Analysis/Analysis';
 import AddTraining from './containers/Pages/Training/AddTraining/AddTraining';
+import PreviewTraining from './containers/Pages/Training/PreviewTraining/PreviewTraining';
 import Chat from './containers/Pages/Chat/Chat';
 import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
@@ -52,6 +53,7 @@ class App extends Component{
           <Route exact path={ROUTES.ADDTRAINING} component={AddTraining}></Route>
           <Route exact path={ROUTES.CHAT} component={Chat}></Route>
           <Route exact path={ROUTES.LOGOUT} component={Logout}></Route>
+          <Route exact path={ROUTES.PREVIEWTRAINING} component={PreviewTraining}></Route>
         </Switch>
       )
     }

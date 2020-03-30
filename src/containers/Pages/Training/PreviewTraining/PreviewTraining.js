@@ -2,14 +2,21 @@ import React, { Component } from 'react'
 import { Container, Row, Col, Button} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Chart from '../../../../components/Card/Chart/Chart';
+import Modal from '../../../../components/Modal/Modal';
 import { withRouter } from 'react-router-dom';
 import './PreviewTraining.css';
 import * as actions from '../../../../store/actions/exports';
 export class PreviewTraining extends Component {
+    state = {
+        modalVisibility: false
+    }
     onDeleteHandler = (event,tId) => {
         event.preventDefault();
         this.props.trainingDelete(tId);
         this.props.history.push('/add-training');
+    }
+    toggleModal = () => {
+        this.setState({modalVisibility: !this.state.modalVisibility});
     }
     render() {
         let training = this.props.trainings[this.props.match.params.id];
@@ -45,11 +52,20 @@ export class PreviewTraining extends Component {
             }
             return percent;
         }
+        let modal = (
+                <Modal
+                    show={this.state.modalVisibility}
+                    title="Confirm action"
+                    handleToggle={(event) => this.toggleModal(event)}
+                    handleDelete={(event) => this.onDeleteHandler(event, training.tId)}
+                />
+        )
         return (
             <div className="TrainingInfo">
+                {modal}
                 <Container className="Content">
                     <h4>Training Preview</h4>
-                    <h6>({training.practitionerFullname})</h6>
+                    <h6><i className="fas fa-user text-white mr-2"></i>{training.practitionerFullname}</h6>
                     <Row>
                         <Col xs={12} md={8} lg={8}>
                             <p><i className="fas fa-dumbbell mr-2"></i><strong>Training:</strong> {training.type}</p>
@@ -69,7 +85,7 @@ export class PreviewTraining extends Component {
                             </Button>
                         </Col>
                         <Col xs={12} md={6}>
-                            <Button className="btn btn-block btn-danger mb-2" onClick={(event) => this.onDeleteHandler(event, training.tId)}>
+                            <Button className="btn btn-block btn-danger mb-2" onClick={this.toggleModal}>
                                 <i className="fas fa-trash-alt mr-2"></i>
                                 Remove
                             </Button>

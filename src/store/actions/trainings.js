@@ -55,6 +55,9 @@ export const trainingsFetch = (userId, userType) => {
             if(coll.length===0) {
                 dispatch(trainingsFetchEmpty("No trainings found!"));
             } else {
+                coll.sort(function(a,b){
+                    return new Date(a.time) - new Date(b.time);
+                });
                 dispatch(trainingsFetchSuccess(coll));
             }
         })

@@ -112,12 +112,12 @@ class AddTraining extends Component {
                 this.setState({loading: false});
                 this.setState({message: true});
             }
-        , 600)
+            , 600)
         setTimeout(
             () => {
                 this.setState({message: false});
             }
-        , 2000)
+            , 2000)
     }
     imageClick = (e) => {
         this.setState({trainingType: e.target.alt});
@@ -226,7 +226,10 @@ class AddTraining extends Component {
                                 {intensitySlider}
                                 {form}
                             </FormGroup>
-                            <Button className="btn btn-warning btn-block" type="submit">ADD</Button>
+                            <Button className="btn btn-block btn-warning text-white mb-2" type="submit">
+                                <i className="fas fa-plus mr-2"></i>
+                                ADD
+                            </Button>
                         </Form>
                         </Col>
                         <Col xs={12} md={7} lg={6}>
@@ -238,7 +241,6 @@ class AddTraining extends Component {
                         </Col>
                     </Row>
                 </Container>
-
         )
     }
 }
